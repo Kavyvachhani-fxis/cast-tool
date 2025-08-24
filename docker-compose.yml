@@ -1,0 +1,62 @@
+services:
+  jenkins:
+    build: ./jenkins  # Directory where your custom Dockerfile is located
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - castnet
+
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - castnet
+
+  # zaproxy:
+  #   image: ghcr.io/zaproxy/zaproxy:latest  # Switching to GitHub Container Registry
+  #   container_name: zaproxy
+  #   ports:
+  #     - "8090:8090"
+  #   command: zap.sh -daemon -port 8090 -host 0.0.0.0
+  #   environment:
+  #     ZAP_API_KEY: "your_api_key_here"  # Optional, if you use API Key
+  #   networks:
+  #     - castnet
+
+  trivy:
+    image: aquasec/trivy:latest
+    container_name: trivy
+    entrypoint: ["trivy"]
+    command: ["--version"]
+    networks:
+      - castnet
+
+  dependency-check:
+    image: owasp/dependency-check
+    container_name: dependency-check
+    entrypoint: ["/usr/share/dependency-check/bin/dependency-check.sh", "--version"]
+    networks:
+      - castnet
+
+volumes:
+  jenkins_home:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+
+networks:
+  castnet:
+    driver: bridge

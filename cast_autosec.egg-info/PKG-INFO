@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: cast-autosec
+Version: 0.1.0
+Summary: Automated DevSecOps pipeline bootstrapper for CAST AutoSec
+Author-email: CAST AutoSec <noreply@example.com>
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: jinja2>=3.1.2
+Requires-Dist: reportlab>=4.1.0
+Requires-Dist: docker>=7.0.0
+Requires-Dist: gitpython>=3.1.43
+Requires-Dist: jenkinsapi>=0.3.13
+Requires-Dist: pypdf>=4.2.0
+
+
+# CAST AutoSec
+
+A pip-installable tool to bootstrap and run an automated DevSecOps pipeline (Dependency-Check, Trivy, ZAP, SonarQube) and generate a unified PDF report.

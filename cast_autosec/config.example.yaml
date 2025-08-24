@@ -1,0 +1,23 @@
+
+workspace: ~/.cast_autosec
+sonarqube:
+  url: http://localhost:9000
+  token: ""
+  compose_profile: default
+jenkins:
+  url: http://localhost:8080
+  user: ""
+  token: ""
+tools:
+  dependency_check:
+    image: owasp/dependency-check:latest
+    args: "--format ALL"
+  trivy:
+    image: aquasec/trivy:latest
+    args: "fs --security-checks vuln,config --severity HIGH,CRITICAL ."
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    target_url: "http://localhost:8080"
+reports:
+  out_dir: reports
+  project_name: sample-project

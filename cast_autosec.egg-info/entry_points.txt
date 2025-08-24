@@ -1,0 +1,2 @@
+[console_scripts]
+cast-autosec = cast_autosec.cli:main
